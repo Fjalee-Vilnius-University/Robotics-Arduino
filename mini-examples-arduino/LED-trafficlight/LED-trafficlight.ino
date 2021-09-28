@@ -7,6 +7,10 @@
 
 void setup() {
   pinMode(FADE_LED, OUTPUT);
+  pinMode(BLINK_LED, OUTPUT);
+  pinMode(GREEN_LED, OUTPUT);
+  pinMode(BLUE_LED, OUTPUT);
+  pinMode(RED_LED, OUTPUT);
 }
 
 void loop() {
