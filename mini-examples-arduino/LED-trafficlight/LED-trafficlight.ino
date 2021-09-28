@@ -15,24 +15,11 @@ void loop() {
 
   digitalWrite(GREEN_LED, HIGH);
 
-  delay(1000);
-  blink();
-  delay(1000);
-  blink();
-  delay(1000);
-  blink();
-
+  blink_for(3, 1000);
   fade();
-
-  delay(1000);
-  blink();
-  delay(1000);
-  blink();
-  delay(1000);
-  blink();
+  blink_for(3, 1000);
 
   digitalWrite(GREEN_LED, LOW);
-
 }
 
 void fade(){
@@ -67,3 +54,9 @@ void turn_two_leds_on_for(int led1, int led2, int milliseconds){
   digitalWrite(led2, LOW);
 }
 
+void blink_for(int times, int delayMs){
+  for (int i=0; i<times; i++){
+    delay(delayMs);
+    blink();
+  }
+}
