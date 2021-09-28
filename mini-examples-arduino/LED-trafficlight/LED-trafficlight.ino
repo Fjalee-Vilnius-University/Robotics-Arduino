@@ -1,3 +1,7 @@
+#define GREEN_LED 10
+#define BLUE_LED 11
+#define RED_LED 12
+
 #define FADE_LED 3
 #define BLINK_LED 2
 
@@ -6,6 +10,10 @@ void setup() {
 }
 
 void loop() {
+  turn_led_on_for(RED_LED, 3000);
+  turn_two_leds_on_for(RED_LED, BLUE_LED, 1000);
+
+  digitalWrite(GREEN_LED, HIGH);
 
   delay(1000);
   blink();
@@ -22,6 +30,9 @@ void loop() {
   blink();
   delay(1000);
   blink();
+
+  digitalWrite(GREEN_LED, LOW);
+
 }
 
 void fade(){
@@ -40,5 +51,19 @@ void blink(){
   delay(1000);
   digitalWrite(BLINK_LED, LOW);
   delay(1000);
+}
+
+void turn_led_on_for(int led, int milliseconds){
+  digitalWrite(led, HIGH);
+  delay(milliseconds);
+  digitalWrite(led, LOW);
+}
+
+void turn_two_leds_on_for(int led1, int led2, int milliseconds){
+  digitalWrite(led1, HIGH);
+  digitalWrite(led2, HIGH);
+  delay(milliseconds);
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, LOW);
 }
 
