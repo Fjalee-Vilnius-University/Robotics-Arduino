@@ -1,0 +1,6 @@
+{
+    "board": "arduino:avr:uno",
+    "port": "COM4",
+    "sketch": "mini-examples-arduino\\LED-breadBoard-blink\\LED-breadBoard-blink.ino",
+    "programmer": "arduino:avrisp"
+}
