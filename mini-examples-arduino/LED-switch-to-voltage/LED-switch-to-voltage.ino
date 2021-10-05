@@ -10,8 +10,6 @@ void setup() {
   pinMode(RED_LED, OUTPUT);
 
   pinMode(POTENTIOMETER, INPUT);
-
-  Serial.begin(9600);
 }
 
 void loop() {
