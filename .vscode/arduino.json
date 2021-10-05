@@ -1,10 +1,6 @@
 {
     "board": "arduino:avr:uno",
     "port": "COM4",
-<<<<<<< HEAD
-    "sketch": "mini-examples-arduino\\LED-breadBoard-blink\\LED-breadBoard-blink.ino"
-=======
     "sketch": "mini-examples-arduino\\LED-breadBoard-blink\\LED-breadBoard-blink.ino",
     "programmer": "arduino:avrisp"
->>>>>>> master
 }
