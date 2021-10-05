@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:uno",
     "port": "COM4",
-    "sketch": "mini-examples-arduino\\LED-breadBoard-blink\\LED-breadBoard-blink.ino",
+    "sketch": "mini-examples-arduino\\LED-switch-to-voltage\\LED-switch-to-voltage.ino",
     "programmer": "arduino:avrisp"
 }
