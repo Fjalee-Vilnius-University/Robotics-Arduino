@@ -22,23 +22,31 @@ void setup() {
 }
 
 void loop() {
-  int red = digitalRead(RED_BUTTON);
-  int green = digitalRead(GREEN_BUTTON);
-  int blue = digitalRead(BLUE_BUTTON);
+  int red1 = digitalRead(RED_BUTTON);
+  int green1 = digitalRead(GREEN_BUTTON);
+  int blue1 = digitalRead(BLUE_BUTTON);
+
+  delay(10);
   
-   if (red == LOW){
+  int red2 = digitalRead(RED_BUTTON);
+  int green2 = digitalRead(GREEN_BUTTON);
+  int blue2 = digitalRead(BLUE_BUTTON);
+
+   if ((red1 || red2) == LOW){
     if (redValue >= 255){
       redValue = 0;
     }
     redValue++;
    }
-   if (green == LOW){
+
+   if ((green1 || green2) == LOW){
     if (greenValue >= 255){
       greenValue = 0;
     }
     greenValue++;
    }
-   if (blue == LOW){
+   
+   if ((blue1 || blue2) == LOW){
     if (blueValue >= 255){
       blueValue = 0;
     }
@@ -48,8 +56,8 @@ void loop() {
   rgbOn(redValue, greenValue, blueValue);
 }
 
-void rgbOn(int red, int green, int blue){
-  analogWrite(RED_PIN, red);
-  analogWrite(GREEN_PIN, green);
-  analogWrite(BLUE_PIN, blue);
+void rgbOn(int red1, int green1, int blue1){
+  analogWrite(RED_PIN, red1);
+  analogWrite(GREEN_PIN, green1);
+  analogWrite(BLUE_PIN, blue1);
 }
