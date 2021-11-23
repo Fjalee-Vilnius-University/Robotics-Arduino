@@ -37,12 +37,10 @@ void loop() {
   int blueButton = BLUE_BUTTON;
   int yellowButton = YELLOW_BUTTON;
 
-  buttonAction(redLed, redButton);
-  buttonAction(greenLed, greenButton);
-  buttonAction(blueLed, blueButton);
-  buttonAction(yellowLed, yellowButton);
-
-  playNote('a', 500);
+  buttonAction(redLed, redButton, 'a');
+  buttonAction(greenLed, greenButton, 'b');
+  buttonAction(blueLed, blueButton, 'c');
+  buttonAction(yellowLed, yellowButton, 'd');;
 }
 
 void playTone(int tone, int duration){
@@ -56,7 +54,7 @@ void playTone(int tone, int duration){
 }
 
 void playNote(char note, int duration){
-  char names[] = {'c', 'd', 'e', 'f', 'g', 'a', 'c', 'C'};
+  char names[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
   int tones[] = {1915, 1700, 1519, 1432, 1275, 1136, 1014, 956};
 
   for (int i = 0; i < 8; i++)
@@ -67,26 +65,33 @@ void playNote(char note, int duration){
   }
 }
 
-void blinkLed(int led){
+void blinkLedWithNote(int led, char note){
   if (!isLed(led)){
     return;
   }
 
   digitalWrite(led, HIGH);
-  delay(delayInMs);
+  playNote(note, delayInMs);
   digitalWrite(led, LOW);
 }
 
-bool buttonAction(int led, int button){
+void buttonAction(int led, int button, char note){
   if (!isButton(button) || !isLed(led)){
-    return false;
+    return;
   }
 
-  int buttonState = digitalRead(button);
+  bool isButtonOn = true;
 
-  if(buttonState == LOW){
-    blinkLed(led);
-    return true;
+  while (isButtonOn){
+    int buttonState = digitalRead(button);
+
+    if (buttonState == HIGH){
+      isButtonOn = false;
+    }
+    else{
+      // blinkLedWithNote(led);
+    }
+
   }
 }
 
