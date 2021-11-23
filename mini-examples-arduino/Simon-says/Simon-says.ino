@@ -40,7 +40,9 @@ void loop() {
   buttonAction(redLed, redButton, 'a');
   buttonAction(greenLed, greenButton, 'b');
   buttonAction(blueLed, blueButton, 'c');
-  buttonAction(yellowLed, yellowButton, 'd');;
+  buttonAction(yellowLed, yellowButton, 'd');
+
+  
 }
 
 void playTone(int tone, int duration){
@@ -89,9 +91,15 @@ void buttonAction(int led, int button, char note){
       isButtonOn = false;
     }
     else{
-      // blinkLedWithNote(led);
-    }
+      blinkLedWithNote(led, note);
 
+      while(true){
+        buttonState = digitalRead(button);
+        if (buttonState == HIGH){
+          return;
+        }
+      }
+    }
   }
 }
 
