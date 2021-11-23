@@ -37,12 +37,50 @@ void loop() {
   int blueButton = BLUE_BUTTON;
   int yellowButton = YELLOW_BUTTON;
 
-  buttonAction(redLed, redButton, 'a');
-  buttonAction(greenLed, greenButton, 'b');
-  buttonAction(blueLed, blueButton, 'c');
-  buttonAction(yellowLed, yellowButton, 'd');
+  char redTone = 'a';
+  char blueTone = 'b';
+  char greenTone = 'c';
+  char yellowTone = 'd';
 
+  int randLed = genRandomLed();
+
+  delay(5000);
+
+  buttonAction(redLed, redButton, redTone);
+  buttonAction(greenLed, greenButton, blueTone);
+  buttonAction(blueLed, blueButton, greenTone);
+  buttonAction(yellowLed, yellowButton, yellowTone);
+}
+
+int genRandomLed(){
+  int redLed = RED_LED;
+  int greenLed = GREEN_LED;
+  int blueLed = BLUE_LED;
+  int yellowLed = YELLOW_LED;
+
+  char redTone = 'a';
+  char blueTone = 'b';
+  char greenTone = 'c';
+  char yellowTone = 'd';
+
+  int randNum = random(1,5);
   
+  if (randNum == 1){
+    blinkLedWithNote(redLed, redTone);
+    return = redLed;
+  }
+  if (randNum == 2){
+    blinkLedWithNote(blueLed, blueTone);
+    return = blueLed;
+  }
+  if (randNum == 3){
+    blinkLedWithNote(greenLed, greenTone);
+    return = greenLed;
+  }
+  if (randNum == 4){
+    blinkLedWithNote(yellowLed, yellowTone);
+    return = yellowLed;
+  }
 }
 
 void playTone(int tone, int duration){
