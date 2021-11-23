@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:uno",
     "port": "COM4",
-    "sketch": "",
+    "sketch": "mini-examples-arduino\\Simon-says\\Simon-says.ino",
     "programmer": "arduino:avrisp"
 }
