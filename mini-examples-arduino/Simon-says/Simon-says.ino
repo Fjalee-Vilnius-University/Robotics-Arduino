@@ -10,7 +10,10 @@
 #define BLUE_BUTTON 9
 #define YELLOW_BUTTON 12
 
-int delayInMs = 50;
+int delayInMs = 1000;
+int totalLevels = 20;
+int timeBetweenLevels = 2000;
+int timeBetweenLeds = 50;
 
 void setup() {
   pinMode(SPEAKER, OUTPUT);
@@ -24,6 +27,7 @@ void setup() {
   pinMode(GREEN_BUTTON, INPUT_PULLUP);
   pinMode(BLUE_BUTTON, INPUT_PULLUP);
   pinMode(YELLOW_BUTTON, INPUT_PULLUP);
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -42,14 +46,69 @@ void loop() {
   char greenTone = 'c';
   char yellowTone = 'd';
 
-  int randLed = genRandomLed();
+  int outputLedPath[totalLevels] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};;
 
-  delay(5000);
+  for (int i = 0; i < totalLevels; i++)
+  {
+    int randLed = genRandomLed();
+    outputLedPath[i] = randLed;
 
-  buttonAction(redLed, redButton, redTone);
-  buttonAction(greenLed, greenButton, blueTone);
-  buttonAction(blueLed, blueButton, greenTone);
-  buttonAction(yellowLed, yellowButton, yellowTone);
+    for (int j = 0; j <= i; j++){
+      int ledToBlink = outputLedPath[j];
+      blinkLedWithNote(ledToBlink, ' ');
+      delay(timeBetweenLeds);
+    }
+    
+    delay(2000);
+    int userInputPath[totalLevels] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    for (int j = 0; j <= i; j++)
+    {
+      int userInputLed = waitForButtonPress();
+      userInputPath[j] = userInputLed;
+    }
+
+    int lost = memcmp(outputLedPath, userInputPath, sizeof(outputLedPath));
+
+    if(!lost == 0){
+      digitalWrite(redLed, HIGH);
+      digitalWrite(greenLed, HIGH);
+      digitalWrite(blueLed, HIGH);
+      digitalWrite(yellowLed, HIGH);
+      while(1);
+    }
+
+    delay(timeBetweenLevels);
+  }
+}
+
+int waitForButtonPress(){
+  int redLed = RED_LED;
+  int greenLed = GREEN_LED;
+  int blueLed = BLUE_LED;
+  int yellowLed = YELLOW_LED;
+
+  int redButton = RED_BUTTON;
+  int greenButton = GREEN_BUTTON;
+  int blueButton = BLUE_BUTTON;
+  int yellowButton = YELLOW_BUTTON;
+
+  char redTone = 'a';
+  char blueTone = 'b';
+  char greenTone = 'c';
+  char yellowTone = 'd';
+
+  bool noResponse = true;
+  while(noResponse){
+    bool redPressed = buttonAction(redLed, redButton, redTone);
+    bool greenPressed = buttonAction(greenLed, greenButton, blueTone);
+    bool bluePressed = buttonAction(blueLed, blueButton, greenTone);
+    bool yellowPressed = buttonAction(yellowLed, yellowButton, yellowTone);
+
+    if (redPressed) return true;
+    if (greenPressed) return true;
+    if (bluePressed) return true;
+    if (yellowPressed) return true;
+  }
 }
 
 int genRandomLed(){
@@ -67,19 +126,19 @@ int genRandomLed(){
   
   if (randNum == 1){
     blinkLedWithNote(redLed, redTone);
-    return = redLed;
+    return redLed;
   }
   if (randNum == 2){
     blinkLedWithNote(blueLed, blueTone);
-    return = blueLed;
+    return blueLed;
   }
   if (randNum == 3){
     blinkLedWithNote(greenLed, greenTone);
-    return = greenLed;
+    return greenLed;
   }
   if (randNum == 4){
     blinkLedWithNote(yellowLed, yellowTone);
-    return = yellowLed;
+    return yellowLed;
   }
 }
 
@@ -105,9 +164,28 @@ void playNote(char note, int duration){
   }
 }
 
-void blinkLedWithNote(int led, char note){
+void blinkLedWithNote(int led, char unusedNote){
+  char redTone = 'a';
+  char blueTone = 'b';
+  char greenTone = 'c';
+  char yellowTone = 'd';
+
   if (!isLed(led)){
     return;
+  }
+
+  char note = ' ';
+  if (led == RED_LED){
+    note = redTone;
+  }
+  if (led == GREEN_LED){
+    note = greenTone;
+  }
+  if (led == BLUE_LED){
+    note = blueTone;
+  }
+  if (led == YELLOW_LED){
+    note = yellowTone;
   }
 
   digitalWrite(led, HIGH);
@@ -115,9 +193,9 @@ void blinkLedWithNote(int led, char note){
   digitalWrite(led, LOW);
 }
 
-void buttonAction(int led, int button, char note){
+bool buttonAction(int led, int button, char note){
   if (!isButton(button) || !isLed(led)){
-    return;
+    return false;
   }
 
   bool isButtonOn = true;
@@ -134,11 +212,12 @@ void buttonAction(int led, int button, char note){
       while(true){
         buttonState = digitalRead(button);
         if (buttonState == HIGH){
-          return;
+          return true;
         }
       }
     }
   }
+  return false;
 }
 
 bool isLed(int led){
